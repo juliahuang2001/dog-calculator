@@ -2,22 +2,19 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import math
 
 app = Flask(__name__, template_folder="template")
-app.secret_key = "supersecretkey"  # session 必须要
+app.secret_key = "supersecretkey"  # 用于 session
 
-# ---------- 计算函数 ----------
+# --------- 计算函数 ---------
 def calculate_rer(weight):
-    """计算RER"""
     return 70 * (weight ** 0.75)
 
 def calculate_mer(rer, activity_factor):
-    """计算MER"""
     return rer * activity_factor
 
 def convert_lb_to_kg(lb):
     return lb * 0.4536
 
-
-# ---------- 路由 ----------
+# --------- 路由 ---------
 @app.route("/", methods=["GET", "POST"])
 def step1():
     if request.method == "POST":
@@ -25,14 +22,12 @@ def step1():
         return redirect(url_for("step2"))
     return render_template("step1.html")
 
-
 @app.route("/step2", methods=["GET", "POST"])
 def step2():
     if request.method == "POST":
         session["gender"] = request.form["gender"]
         return redirect(url_for("step3"))
     return render_template("step2.html", dog=session.get("dog_name"))
-
 
 @app.route("/step3", methods=["GET", "POST"])
 def step3():
@@ -50,7 +45,6 @@ def step3():
 
         return redirect(url_for("step4"))
     return render_template("step3.html", dog=session.get("dog_name"))
-
 
 @app.route("/step4", methods=["GET", "POST"])
 def step4():
@@ -82,7 +76,6 @@ def step4():
         return redirect(url_for("result"))
     return render_template("step4.html", dog=session.get("dog_name"))
 
-
 @app.route("/result")
 def result():
     dog = session.get("dog_name")
@@ -99,11 +92,10 @@ def result():
     rer = round(calculate_rer(weight))
     mer = round(calculate_mer(rer, activity_factor))
     fresh_kcal = round(mer * fresh_ratio)
-    fresh_g = round(fresh_kcal / 3)  # 假设 1g ≈ 3kcal
+    fresh_g = round(fresh_kcal / 3)  # 假设 1g≈3kcal
 
     total_g = fresh_g * cycle_days
 
-    # 包装规格换算
     pack_size = 454  # 1lb
     packs_total = math.ceil(total_g / pack_size)
 
