@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Step 4 - Feeding Preferences</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { font-family:'Nunito Sans',sans-serif;
+           background:url('https://jujuletpetbakery.ca/cdn/shop/files/500845750_17897365992211258_4975839141446562161_n.jpg?v=1750226357&width=713') center/cover no-repeat fixed;
+           background-color:#fffaf5;
+           color:#222; }
+    .card { border-radius:15px;background:rgba(255,255,255,0.95);
+            backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:20px; }
+    h1,h2,h3,label { color:#BF7174 !important; }
+    .btn-custom, .btn-success { background-color:#BF7174 !important; border:none; color:white; }
+    .btn-custom:hover, .btn-success:hover { background-color:#a05255 !important; }
+  </style>
+  <script>
+    function toggleRatio() {
+      let chicken = document.getElementById("chicken");
+      let beef = document.getElementById("beef");
+      let ratioDiv = document.getElementById("ratioDiv");
+      if (chicken.checked && beef.checked) {
+        ratioDiv.style.display = "block";
+      } else {
+        ratioDiv.style.display = "none";
+      }
+    }
+  </script>
+</head>
+<body>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <h2 class="mb-3 text-center">Feeding Preferences for {{ dog }}</h2>
+        <form method="post">
+          <label class="form-label">Activity Factor</label>
+          <input type="number" step="0.1" class="form-control mb-2" name="activity_factor" value="1.6">
+
+          <label class="form-label">Fresh Food Ratio (0~1)</label>
+          <input type="number" step="0.1" class="form-control mb-2" name="fresh_ratio" value="0.5">
+
+          <label class="form-label">Feeding Cycle (days)</label>
+          <select class="form-select mb-2" name="cycle_days">
+            <option value="7">7</option>
+            <option value="14" selected>14</option>
+            <option value="28">28</option>
+          </select>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="chicken" name="chicken" value="1" onclick="toggleRatio()">
+            <label class="form-check-label" for="chicken">Chicken</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="beef" name="beef" value="1" onclick="toggleRatio()">
+            <label class="form-check-label" for="beef">Beef</label>
+          </div>
+
+          <div id="ratioDiv" style="display:none;" class="mt-2">
+            <label class="form-label">Chicken Ratio (0~1)</label>
+            <input type="number" step="0.1" class="form-control mb-2" name="chicken_ratio" value="0.5">
+            <div class="form-text">Beef Ratio = 1 − Chicken Ratio</div>
+          </div>
+
+          <button type="submit" class="btn btn-success w-100">Calculate Result </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+
