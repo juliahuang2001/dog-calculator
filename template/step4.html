@@ -30,12 +30,15 @@
     function validateForm() {
       let chicken = document.getElementById("chicken").checked;
       let beef = document.getElementById("beef").checked;
+      let errorMsg = document.getElementById("errorMsg");
 
       if (!chicken && !beef) {
-        alert("Please choose at least one flavour.");
+        errorMsg.style.display = "block";
         return false; // 阻止提交
+      } else {
+        errorMsg.style.display = "none";
+        return true; // 允许提交
       }
-      return true; // 允许提交
     }
   </script>
 </head>
@@ -74,6 +77,11 @@
             <div class="form-text">Beef Ratio = 1 − Chicken Ratio</div>
           </div>
 
+          <!-- 错误提示信息 -->
+          <div id="errorMsg" class="text-danger mb-2" style="display:none;">
+            Choose at least one flavour.
+          </div>
+
           <button type="submit" class="btn btn-success w-100">Calculate Result </button>
         </form>
       </div>
@@ -82,4 +90,3 @@
 </div>
 </body>
 </html>
-
