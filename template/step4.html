@@ -20,10 +20,14 @@
       let chicken = document.getElementById("chicken");
       let beef = document.getElementById("beef");
       let ratioDiv = document.getElementById("ratioDiv");
+      let chickenRatioInput = document.getElementById("chicken_ratio");
+
       if (chicken.checked && beef.checked) {
         ratioDiv.style.display = "block";
+        chickenRatioInput.required = true; // ✅ 只有同时选择时才必填
       } else {
         ratioDiv.style.display = "none";
+        chickenRatioInput.required = false; // ✅ 其他情况下不是必填
       }
     }
 
@@ -50,7 +54,6 @@
     <div class="col-md-6">
       <div class="card shadow">
         <h2 class="mb-3 text-center">Feeding Preferences for {{ dog }}</h2>
-        <!-- ✅ 口味必选验证 -->
         <form method="post" onsubmit="return validateForm(event)">
           <label class="form-label">Activity Factor</label>
           <input type="number" step="0.1" class="form-control mb-2" name="activity_factor" required>
@@ -75,14 +78,13 @@
             <label class="form-check-label" for="beef">Beef</label>
           </div>
 
-          <!-- ❗ 错误提示显示在口味选择下方 -->
+          <!-- ❗ 错误提示 -->
           <div id="errorMsg" class="alert alert-danger mt-2" style="display:none;"></div>
 
-          <!-- 当同时选中 Chicken+Beef 时显示配比 -->
+          <!-- ✅ 只有同时选择 Chicken+Beef 时才必填 -->
           <div id="ratioDiv" style="display:none;" class="mt-2">
             <label class="form-label">Chicken Ratio (0~1)</label>
-            <!-- ❌ 去掉 required，避免单选时阻塞提交 -->
-            <input type="number" step="0.1" class="form-control mb-2" name="chicken_ratio">
+            <input type="number" step="0.1" class="form-control mb-2" id="chicken_ratio" name="chicken_ratio">
             <div class="form-text">Beef Ratio = 1 − Chicken Ratio</div>
           </div>
 
