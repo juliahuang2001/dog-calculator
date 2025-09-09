@@ -26,6 +26,24 @@
         ratioDiv.style.display = "none";
       }
     }
+
+    function validateForm(event) {
+      event.preventDefault(); // 阻止默认提交
+      let chicken = document.getElementById("chicken").checked;
+      let beef = document.getElementById("beef").checked;
+      let errorMsg = document.getElementById("errorMsg");
+      let form = event.target;
+
+      if (!chicken && !beef) {
+        errorMsg.innerText = "⚠️ 请至少选择一个口味！"; // 确保提示有内容
+        errorMsg.style.display = "block";
+        return false;
+      } else {
+        errorMsg.style.display = "none";
+        form.submit(); // 通过验证才提交
+        return true;
+      }
+    }
   </script>
 </head>
 <body>
@@ -34,7 +52,7 @@
     <div class="col-md-6">
       <div class="card shadow">
         <h2 class="mb-3 text-center">Feeding Preferences for {{ dog }}</h2>
-        <form method="post">
+        <form method="post" onsubmit="return validateForm(event)">
           <label class="form-label">Activity Factor</label>
           <input type="number" step="0.1" class="form-control mb-2" name="activity_factor" required>
 
@@ -63,7 +81,12 @@
             <div class="form-text">Beef Ratio = 1 − Chicken Ratio</div>
           </div>
 
-          <button type="submit" class="btn btn-success w-100">Calculate Result </button>
+          <!-- 错误提示信息 -->
+          <div id="errorMsg" class="alert alert-danger mt-3" style="display:none;">
+            <!-- JS 会填充提示文字 -->
+          </div>
+
+          <button type="submit" class="btn btn-success w-100">Calculate Result</button>
         </form>
       </div>
     </div>
@@ -71,5 +94,4 @@
 </div>
 </body>
 </html>
-
 
