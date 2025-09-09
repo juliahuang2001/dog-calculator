@@ -28,19 +28,18 @@
     }
 
     function validateForm(event) {
-      event.preventDefault(); // 阻止默认提交
-
       let chicken = document.getElementById("chicken").checked;
       let beef = document.getElementById("beef").checked;
       let errorMsg = document.getElementById("errorMsg");
-      let form = event.target;
 
       if (!chicken && !beef) {
+        event.preventDefault(); // 阻止提交
         errorMsg.style.display = "block";
-        errorMsg.innerText = "Please choose at least one flavour.";
+        errorMsg.innerText = "Please choose at least one flavor.";
+        return false;
       } else {
         errorMsg.style.display = "none";
-        form.submit(); // ✅ 验证通过再提交
+        return true; // 正常提交
       }
     }
   </script>
@@ -51,7 +50,8 @@
     <div class="col-md-6">
       <div class="card shadow">
         <h2 class="mb-3 text-center">Feeding Preferences for {{ dog }}</h2>
-        <form method="post" onsubmit="validateForm(event)">
+        <!-- ✅ 只在这里加 onsubmit -->
+        <form method="post" onsubmit="return validateForm(event)">
           <label class="form-label">Activity Factor</label>
           <input type="number" step="0.1" class="form-control mb-2" name="activity_factor" required>
 
@@ -83,7 +83,8 @@
           <!-- 错误提示信息 -->
           <div id="errorMsg" class="alert alert-danger mt-3" style="display:none;"></div>
 
-          <button type="submit" class="btn btn-success w-100">Calculate Result</button>
+          <!-- ✅ 保持原本的 Calculate Result -->
+          <button type="submit" class="btn btn-success w-100">Calculate Result </button>
         </form>
       </div>
     </div>
@@ -91,4 +92,5 @@
 </div>
 </body>
 </html>
+
 
