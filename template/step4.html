@@ -33,13 +33,13 @@
       let errorMsg = document.getElementById("errorMsg");
 
       if (!chicken && !beef) {
-        event.preventDefault(); // 阻止提交
+        event.preventDefault(); // ❌ 只在未选口味时阻止提交
         errorMsg.style.display = "block";
-        errorMsg.innerText = "Please choose at least one flavor.";
+        errorMsg.innerText = "⚠️ 请至少选择一个口味！";
         return false;
       } else {
         errorMsg.style.display = "none";
-        return true; // 正常提交
+        return true; // ✅ 允许提交
       }
     }
   </script>
@@ -50,7 +50,7 @@
     <div class="col-md-6">
       <div class="card shadow">
         <h2 class="mb-3 text-center">Feeding Preferences for {{ dog }}</h2>
-        <!-- ✅ 只在这里加 onsubmit -->
+        <!-- ✅ 表单验证 -->
         <form method="post" onsubmit="return validateForm(event)">
           <label class="form-label">Activity Factor</label>
           <input type="number" step="0.1" class="form-control mb-2" name="activity_factor" required>
@@ -65,6 +65,7 @@
             <option value="28">28</option>
           </select>
 
+          <!-- ✅ 口味选择 -->
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="chicken" name="chicken" value="1" onclick="toggleRatio()">
             <label class="form-check-label" for="chicken">Chicken</label>
@@ -74,16 +75,16 @@
             <label class="form-check-label" for="beef">Beef</label>
           </div>
 
+          <!-- ❗ 错误提示放在口味下面 -->
+          <div id="errorMsg" class="alert alert-danger mt-2" style="display:none;"></div>
+
+          <!-- 当鸡肉和牛肉都勾选时显示配比 -->
           <div id="ratioDiv" style="display:none;" class="mt-2">
             <label class="form-label">Chicken Ratio (0~1)</label>
             <input type="number" step="0.1" class="form-control mb-2" name="chicken_ratio" required>
             <div class="form-text">Beef Ratio = 1 − Chicken Ratio</div>
           </div>
 
-          <!-- 错误提示信息 -->
-          <div id="errorMsg" class="alert alert-danger mt-3" style="display:none;"></div>
-
-          <!-- ✅ 保持原本的 Calculate Result -->
           <button type="submit" class="btn btn-success w-100">Calculate Result </button>
         </form>
       </div>
@@ -92,5 +93,6 @@
 </div>
 </body>
 </html>
+
 
 
